@@ -1,0 +1,147 @@
+<html>
+
+<head>
+<script src="highlighter.js"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body {
+font-family: 'Roboto', sans-serif;
+font-size:12px;	
+}
+h1 {
+	font-family:sans-serif;
+	font-size:15px;
+}
+h2 {
+	font-family:sans-serif;
+	font-size:12px;
+}
+pre {
+	background-color:white;
+  border: 1px solid #aaa;
+  padding: 2px;
+  margin: 2px;
+  font-size:15px;
+}
+.boxhighlight {
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  font-weight:800;
+}
+.notimportant {
+	color:green;
+}
+</style>
+</head>
+
+<div style='background-color:E0F7FF;height:250px;overflow:auto;' id='highlighter-examples'>
+<h1>highlighter</h1> 
+<p>Version <script>document.write(highlighter.version())</script>. Copyright Lawrence Angrave 2013. Available under the MIT Open Source License (see highlighter.js for details).</p>
+
+"highlighter" is a small, no-dependency, self-contained "just drop-in and use" javascript library that can find and highlight text.
+
+<h2>Examples</h2>
+<li>Highlight all examples of 'test':</li>
+	<pre>highlighter.highlight(document.body,'test');</pre>(<a>run</a>)
+<li>Highlight 'The' but not 'the' and use a custom span inlinestyle:
+	<pre>highlighter.highlight(document.body,'The', {'caseSensitive':true,'matchHtml':'&lt;span style="font-size:32px"&gt;'});</pre>(<a>run</a>)
+
+<li>Highlight 'NASA', Use a custom style class for matched text:
+	<pre>highlighter.highlight(document.body,'NASA',{'matchHtml':'&lt;span class="boxhighlight"&gt;'});</pre>(<a>run</a>)
+
+<li>Highlight 'quadrocopter', Use a custom style class for matched and non-matched text:
+	<pre>highlighter.highlight(document.body,'quadrocopter',{'matchHtml':'&lt;span class="boxhighlight"&gt;','noMatchHtml':'&lt;span class="notimportant"&gt;'});</pre>(<a>run</a>)
+
+<li>Cancel all highlighting:
+	<pre>highlighter.cancel();</pre>(<a>run</a>)
+
+<br>
+
+<li>You can provide a javascript regular expression object. e.g. Highlight numbers with optional commas using a regular expression: </li>
+	<pre>highlighter.highlight(document.body, /(\d(\d|,)*\d)|\d+/ );</pre>(<a>run</a>)
+
+<li>A string is assumed to be a case insensitive search phase, unless it is in the form of a regular expression such as /of/i  (i means case insensitive):
+	<pre>var key = prompt('Phrase to highlight (or write a /regular-expression/i )','/a/i'); highlighter.highlight(document.body,key);</pre>(<a>run</a>)
+<br>
+<p>You can force regex or no-regex behavior by explicitly setting the isregex option to true or false.</p>
+
+<h2>Example implementation of FindAll and FindNext</h2>
+<li>Scroll to first highlighted text</li><pre>highlighter.findFirst();</pre>(<a>run</a>)
+<li>Scroll to current<pre>highlighter.findNext(0);</pre>(<a>run</a>)
+<li>Scroll to next<pre>highlighter.findNext(1);</pre>(<a>run</a>)
+<li>Scroll to previous<pre>highlighter.findNext(-1);</pre>(<a>run</a>)
+<h2>Limitations</h2>
+This is a new code and is unlikely to work with all possible web content on all browsers in all languages. Only the main window is scrolled. Scrolling of scrollable parent elements is not yet supported. Regular expressions use Javascript's inbuilt regexp objects which only have mediocre support for international character sets.
+<br>
+<h2>Advanced Examples</h2>
+<!-- Matched text can be processed using the matched array -->
+<li>Add ordinal to each fragment of matched text in paragraph two:</li>
+<pre>var result=highlighter.highlight(document.getElementById('para2'),'the'); for(var i=0;i &lt; result.matched.length;i++) result.matched[i].innerHTML += '['+(i+1)+']';</pre>(<a>run</a>) Add Ordinal
+
+<!-- To modify non-matching text fragments process every odd sibling item in each entry (even items correspond to the matched text) -->
+<li>Hide non-matching text fragments:</li>
+<pre>var result=highlighter.highlight(document.getElementById('para2'),/and|\s|\d/);var entries = result.entries; for(var i=0;i &lt; entries.length;i++) { for(var j=0;j &lt; entries[i].siblings.length;j+=2) entries[i].siblings[j].style.display='none';} </pre>(<a>run</a>) 
+
+</div>
+
+<div id='content'>
+<h1>Weightless U of I students debug code and test novel docking system in NASA Microgravity program</h1>
+<em>Lawrence Angrave, 2013</em>
+
+<p id='para1'>June 2013. At 30,000 feet over the gulf of New Mexico, the plane, a heavily customized Boeing 727, changes quickly from a body crunching 2-g climb, where everything is twice as heavy, to free-fall. Your stomach lurches as you float away from the floor. 0 g. For a few seconds the plane will still be gaining altitude, but it's now accelerating towards Earth with you inside. Inside the plane, you instinctively yelp with excitement--you're weightless and floating in the air. An unbelievable, out-of-this world sensation.</p>
+
+<div style="float: right; width:30%; background-color:#C0C0C0;">
+<ul>
+<li><a href="http://goo.gl/KCiUH">Youtube: MoonGoon interviews and NASA robotics tour</a></li>
+<li><a href="http://microgravityuniversity.jsc.nasa.gov/theProgram/video/video.cfm">Nasa Microgravity program</a></li>
+<li><a href="http://www.cs.illinois.edu">Computer Science at the University of Illinois</a></li>
+</ul>
+</div>
+
+<p id='para2'>&quot;You don't get tired of microgravity-it's just really cool every time,&quot; says Dan, engineering physics major, team leader of the Moon Goons. The journey to this point has been an intense experience for the University of Illinois students, Alejandro, Danylo, Ehsan, Linas, Sam, and Sunny. Each year NASA receives over 70 proposals for the Reduced Gravity program and invites around 15 of the best proposals to Houston's Johnson Space Center and to fly at Ellington field. In the previous year, the Moon Goons team did not make the shortlist, but with perseverance they rewrote the proposal, strengthened their school outreach plans, and created a winning entry.
+Their hard work also brought them a prize - one of the winners of best undergraduate research at UIUC's Engineering Open House - and a week at NASA's base at Houston to learn about space, safe &quot;0g&quot; flying, and to prepare and then fly their quadrocopter experiment.</p>
+
+<p id='para3'>The first of two 0-g flight days, Thursday, includes team members Dan, Alejandro, Sunny and myself. The team is nervous and excited. It's the maiden 0-g voyage of the quadrocopter or &quot;drone&quot; experiment, and we're not sure how it will perform. But we're in great hands. NASA has been very careful to ensure our safety: 0-g flight requires all tools, bolts, and loose items be accounted for, and the experiment be strongly secured. Before the flight we've also taken anti-motion sickness medication and are reminded that avoiding neck movements and staying still during the 2-g pull-up phases will help avoid motion sickness.</p>
+
+<p>&quot;Feet down,&quot; warns the NASA flyer before Alejandro even makes it to the laptop to start the experiment. The plane pulls out of its dive and we drop hard on the floor. For the second parabola out of 30, Sunny and Dan are in position, but Alejandro has a surprise waiting for him. His long dreadlocks have caught on some Velcro. On standard Earth gravity,&quot;1 g,&quot; he would simply stand and pull his hair lose. But in 0 g, his body floats up and the slight tug on his hair has now rotated him upside-down. Fortunately he is rescued by a nearby NASA engineer who quickly grabs and rotates Alejandro before the 2-g pull up.</p>
+
+<p>By the third parabola, Alejandro has found the foot straps and is at the laptop ready to tell the quadrocopter to fly to the dock. The laptop provides the computational power--it's the brains behind the quadrocopter, translating the real-time camera images transmitted from the quadrocopter into power changes of each of the four motors. Thanks to electrical engineering major Sunny Gautum, it's reliably receiving a wireless video stream of 15 pictures per second from a camera mounted on the side of the quadrocopter. Sunny developed the communication system and also discovered how to work around the drone's inbuilt software that assumed it was operating in Earth's gravity. </p>
+
+<p>The laptop is running a vision algorithm that searches for the red cloth background and quickly makes power adjustments to the four propellers to turn the drone towards the red cloth.  &quot;Analyzing images is an active area of Computer Science research,&quot; explains computer science major Sam Liu, responsible for the quadrocopter's vision system. &quot;Early on in the design, I used a sliding window detection algorithm but in testing found its performance was too slow to control the quadrocopter. So we simplified the processing required by using a large red cloth and a faster color-moment algorithm. It's fast and sufficient to tell us when the craft has rotated away from the desired docking angle so we can add extra thrust to some of the fans.&quot;</p>
+
+<p>The Moon Goon's experiment is inspired by the original lunar landing module, but today they are testing two new docking systems: first using a vision system to control the quadrocopter, and second, using Lorentz-force magnetic braking to slow the machine as it nears the target. </p>
+
+<p>Due to the 30-second duration of each 0-g parabola, the drone's movements were purposely constrained to one linear and one rotational degree of freedom. These constraints are now the cause of the Moon Goon's very own problem at Houston. The fans whirr and pulse but are ineffective against the friction. The drone refuses to fly. Dan and Sunny open up the safety cage, designed by Linas, and attempt to free the quadrocopter while Alejandro debugs and recompiles the code, his long dreadlocks, unshackled from gravity's tug, explore and waft gently in every possible direction. This is first time I've seen Illinois students debug code at 30,000 ft in 0 g. But the quadrocopter is steadfast so the team use the last few parabolas to playfully perform pushups and bunny hops in 2-g and low-g environments.</p>
+
+<p>Thursday night at the Moon Goons Mission HQ (hotel room 208). A last chance to make some final minor tweaks. Ehsan, an electrical engineering major, has created a simulation model to calculate proportional-integral-derivative feedback values, but without more 0-g testing, friction is still a concern to the team. Realizing that minor tweaks might be insufficient, they rewrite their control software and burn the midnight oil. A torrential thunderstorm rages outside-perhaps tomorrow's flight will be canceled?</p>
+
+<p>Friday 7 a.m. Clear skies-perfect flying conditions for the reduced gravity plane. Back at the airbase the team members carefully follow NASA's strict safety requirements. A missed safety precaution and the entire team could be grounded. Ehsan and Sam zip up their olive green flight suits, take their pre-flight meds. and together with their NASA mentor and robotics engineer Fernando Zumbado, board the plane. The stakes are high. The new software is loaded, but will the quadrocopter fly to home?</p>
+
+<p>With Ehsan and Sam flying, Dan, Sunny. and Alejandro must now wait two hours for news. This last flight represents two years of work. All but Sam are graduating seniors, so this is the last chance they have to be together as a student team. It also represents the Moon Goon's persevering team spirit and their ability to take their Illinois experience out of the classroom and into the sky.</p>
+
+<p>The week at Houston has been more than just the reduced gravity flight. &quot;The Moon Goons learned teamwork and technical skills,&quot; explained Jamie Semple, NASA's Program Coordinator for the Reduced Gravity Education Program, &quot;And with NASA's Flight Opportunities Program, they've had access to full-time NASA engineers.&quot; </p>
+
+<p>&quot;It's work-life as opposed to college-life,&quot; explained Frank Prochaska, program manager. &quot;Safe tool-control and working under an aircraft wing in a hanger is definitely an adjustment for the teams.&quot;</p>
+
+<p>As graduating seniors, this is the last university project the Moon Goon members will collaborate on. They are now leaving their student days, and nights, behind them so the triumphant rise of the quadrocopter on the second day is an appropriate finale. With the gravity display decreasing to 0g, the quadrocopter rises, graciously turns on Linas's custom-3D-printed mounts, flies and docks effortlessly on the target. </p>
+
+<p>Two hours later, the entire team is back on the ground, packing up their experiment, handing in the olive green flight suites for the last time and thinking about life beyond college. But this flight week has spectacular and memorable ending. Their NASA mentor, Fernando Zumbado, offers a private tour of his engineering area. Being NASA, this is an entire hangar with space modules used for astronaut training, humanoid space robots, and his very own full-size robotic creations, including an astronaut jet-pack--soon to be tested in the same microgravity plane. Fernando explained how computer scientists and other engineers work side-by-side as they co-develop systems to work in the most demanding environments. &quot;Just . . . unbelievable!&quot; says Sunny as they posed for the picture, standing on Fernando's six-axis off-world exploration vehicle.</p>
+
+</div>
+</body>
+<script>
+var examples = document.getElementById("highlighter-examples").getElementsByTagName("a");
+for(var i = 0, len = examples.length; i<len; i++) {
+	var ex=examples[i];
+	var text = ex.firstChild.nodeValue;
+	if(text!='run') continue;
+	var code = ex.previousSibling.previousSibling.firstChild.nodeValue;
+	//ex.innerHTML="run!";
+	ex.setAttribute('href','javascript:void(0)');
+	console.log (code);
+	ex.setAttribute('onclick',code); //code.replace(/\\/gm,"\\\\"));
+}
+</script>
+</html>
